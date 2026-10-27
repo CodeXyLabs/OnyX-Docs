@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OnyX Code — документация</title>
+<style>
+  :root{
+    --bg:#0C0C0D; --panel:#131315; --panel2:#1A1A1D; --line:#1F1F22;
+    --text:#EDEDEE; --muted:#8A8A90; --accent:#E5383B; --ok:#6EFFD9; --warn:#FFBE6E;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg); color:var(--text);
+    font-family:-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.6; font-size:16px;
+  }
+  header{
+    position:sticky; top:0; z-index:10;
+    background:rgba(12,12,13,0.92); backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line); padding:14px 24px;
+    display:flex; align-items:center; gap:14px;
+  }
+  header .logo{font-size:20px; font-weight:700; letter-spacing:0.3px;}
+  header .logo b{color:var(--accent);}
+  header .ver{margin-left:auto; color:var(--muted); font-size:13px;}
+  nav{
+    position:sticky; top:57px; z-index:9;
+    background:var(--bg); border-bottom:1px solid var(--line);
+    padding:8px 24px; overflow-x:auto; white-space:nowrap;
+  }
+  nav a{
+    color:var(--muted); text-decoration:none; font-size:13.5px;
+    margin-right:18px; transition:color .15s;
+  }
+  nav a:hover{color:var(--text);}
+  main{max-width:920px; margin:0 auto; padding:28px 24px 80px;}
+  section{margin-bottom:44px;}
+  h1{font-size:28px; margin-bottom:6px;}
+  h2{
+    font-size:22px; margin:36px 0 12px; padding-bottom:8px;
+    border-bottom:1px solid var(--line);
+    display:flex; align-items:center; gap:10px;
+  }
+  h2 .n{
+    background:var(--accent); color:#fff; border-radius:6px;
+    font-size:13px; padding:2px 8px; flex:0 0 auto;
+  }
+  h3{font-size:17px; margin:22px 0 8px; color:var(--text);}
+  p{color:#D6D6DA; margin:8px 0;}
+  ul,ol{margin:8px 0 8px 22px; color:#D6D6DA;}
+  li{margin:4px 0;}
+  code{
+    background:var(--panel2); border:1px solid var(--line); border-radius:4px;
+    padding:1px 6px; font-family:"Cascadia Mono",Consolas,monospace; font-size:13.5px; color:#FFBE6E;
+  }
+  pre{
+    background:var(--panel2); border:1px solid var(--line); border-radius:10px;
+    padding:14px; overflow-x:auto; margin:10px 0;
+  }
+  pre code{background:none; border:none; padding:0; color:#F2B8B0;}
+  .card{
+    background:var(--panel); border:1px solid var(--line); border-radius:12px;
+    padding:18px 20px; margin:14px 0;
+  }
+  .grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:14px; margin:14px 0;}
+  .tile{background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:16px 18px;}
+  .tile h4{font-size:15px; margin-bottom:6px;}
+  .tile p{font-size:13.5px; margin:0;}
+  .tag{
+    display:inline-block; font-size:11.5px; padding:2px 9px; border-radius:20px;
+    margin-right:6px; margin-bottom:6px;
+  }
+  .tag.green{background:#12352C; color:var(--ok);}
+  .tag.red{background:#3A1315; color:#FF8F90;}
+  .tag.yellow{background:#3A2E12; color:var(--warn);}
+  .tag.gray{background:#222226; color:var(--muted);}
+  table{width:100%; border-collapse:collapse; margin:12px 0; font-size:14.5px;}
+  th,td{text-align:left; padding:9px 12px; border-bottom:1px solid var(--line);}
+  th{color:var(--muted); font-size:13px; text-transform:uppercase; letter-spacing:0.4px;}
+  td code{white-space:nowrap;}
+  .warn{
+    border-left:3px solid var(--warn); background:#22190B; border-radius:0 8px 8px 0;
+    padding:12px 16px; margin:12px 0; color:#E9D5B0;
+  }
+  .ok{
+    border-left:3px solid var(--ok); background:#0D221C; border-radius:0 8px 8px 0;
+    padding:12px 16px; margin:12px 0; color:#B9EBD7;
+  }
+  .err{
+    border-left:3px solid var(--accent); background:#2A1012; border-radius:0 8px 8px 0;
+    padding:12px 16px; margin:12px 0; color:#F0B8B8;
+  }
+  a{color:#FF8370; text-decoration:none;}
+  a:hover{text-decoration:underline;}
+  footer{
+    border-top:1px solid var(--line); margin-top:40px; padding-top:18px;
+    color:var(--muted); font-size:12.5px;
+  }
+  .kbd{
+    background:#222226; border:1px solid #3A3A40; border-bottom-width:2px;
+    border-radius:4px; padding:1px 7px; font-size:12.5px; font-family:inherit;
+  }
+  @media (max-width:640px){
+    h1{font-size:23px;} h2{font-size:19px;} body{font-size:15px;}
+    header{padding:12px 16px;} nav{padding:8px 16px;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">OnyX <b>Code</b></div>
+  <div class="ver">Документация · версия 3.2 (Android) / 1.0 (Windows)</div>
+</header>
+
+<nav>
+  <a href="#about">О программе</a>
+  <a href="#install-win">Windows</a>
+  <a href="#install-and">Android</a>
+  <a href="#models">Модели</a>
+  <a href="#chat">Чат</a>
+  <a href="#files">Файлы</a>
+  <a href="#skills">Скиллы</a>
+  <a href="#web">Веб-поиск</a>
+  <a href="#limits">Лимиты и активация</a>
+  <a href="#settings">Настройки</a>
+  <a href="#nn">О нейросети</a>
+  <a href="#faq">FAQ</a>
+</nav>
+
+<main>
+
+<section id="about">
+  <h1>OnyX Code</h1>
+  <p>OnyX Code — локальный ИИ-ассистент для Windows и Android. Нейросеть работает <b>на вашем устройстве</b>: диалоги не уходят в облако, интернет нужен только для скачивания моделей и (по желанию) веб-поиска. Приложение умеет общаться, создавать файлы, собирать отчёты, презентации, таблицы и планы.</p>
+
+  <div class="grid">
+    <div class="tile"><h4>🖥 Windows</h4><p>Полноценное приложение с боковой панелью, историей чатов, файловым агентом и генератором PowerPoint. Требует установленный локальный движок Ollama.</p></div>
+    <div class="tile"><h4>📱 Android</h4><p>Мобильная версия со встроенной моделью в APK (работает сразу после установки) и возможностью скачать более мощные модели. Движок собран под arm64 и x86_64.</p></div>
+    <div class="tile"><h4>🧠 Онлайн-версия (в разработке)</h4><p>Будущий режим без локальных моделей.</p></div>
+  </div>
+</section>
+
+<!-- ================= WINDOWS ================= -->
+<section id="install-win">
+  <h2><span class="n">1</span> Установка · Windows</h2>
+
+  <h3>Что нужно</h3>
+  <ul>
+    <li>Windows 10/11 (64-бит).</li>
+    <li><b>Ollama</b> — локальный движок нейросетей. Скачивается с <code>ollama.com</code>, устанавливается в <code>%LOCALAPPDATA%\Programs\Ollama</code>.</li>
+    <li>Дистрибутив <code>OnyXCode-Setup.exe</code>.</li>
+  </ul>
+
+  <h3>Порядок</h3>
+  <ol>
+    <li>Установите Ollama и один раз запустите его (в трее появится значок).</li>
+    <li>Запустите <code>OnyXCode-Setup.exe</code> и следуйте мастеру.</li>
+    <li>Откройте OnyX Code: при первом запуске появится заставка, затем окно входа.</li>
+    <li>Войдите через Google или пропустите вход.</li>
+  </ol>
+
+  <div class="warn">При первом использовании приложение само скачает выбранную модель через <code>ollama pull</code> (кнопка «Проверить» в настройках показывает статус). На это нужно время и место на диске.</div>
+
+  <h3>Вход через Google</h3>
+  <p>На десктопе используется OAuth-флоу с локальным callback-адресом <code>http://127.0.0.1:53000/</code>. После нажатия «Продолжить» откроется браузер; после подтверждения вход завершится автоматически.</p>
+</section>
+
+<!-- ================= ANDROID ================= -->
+<section id="install-and">
+  <h2><span class="n">2</span> Установка · Android</h2>
+
+  <h3>Что нужно</h3>
+  <ul>
+    <li>Телефон Android 11+ (API 30).</li>
+    <li>Файл <code>OnyXCode.apk</code> (содержит встроенную модель — размер около 500 МБ).</li>
+    <li>Для мощных моделей — ~2–9 ГБ свободного места.</li>
+  </ul>
+
+  <h3>Порядок</h3>
+  <ol>
+    <li>Скопируйте APK на устройство и откройте файл (подтвердите установку «из неизвестных источников», если попросят).</li>
+    <li>Запустите OnyX Code. При первом старте из APK автоматически разворачивается встроенная модель <b>OnyX Mini</b> (около 470 МБ) — интернет не нужен.</li>
+    <li>Выберите «Продолжить без аккаунта» или войдите через Google.</li>
+  </ol>
+
+  <div class="ok">Благодаря встроенной модели приложение работает полностью офлайн сразу после установки. Более качественные модели скачиваются из каталога (раздел «Модели»).</div>
+
+  <h3>Вход через Google (Android)</h3>
+  <p>В мобильной версии вход выполняется через встроенный WebView: открывается страница Google, после входа код авторизации перехватывается автоматически. Если вход отклоняется, настройте Web Client ID:</p>
+  <ol>
+    <li>Google Cloud Console → «OAuth consent screen» → «Credenciales» → создать клиент типа <b>Web application</b>.</li>
+    <li>Скопируйте Client ID (вида <code>xxxx.apps.googleusercontent.com</code>).</li>
+    <li>Вставьте его в приложении: меню ⋯ → «Настройки» → «Вход через Google» → сохранить.</li>
+  </ol>
+  <p>Без настройки клиента можно пользоваться приложением локально («Продолжить без аккаунта»).</p>
+</section>
+
+<!-- ================= МОДЕЛИ ================= -->
+<section id="models">
+  <h2><span class="n">3</span> Модели OnyX V0.5</h2>
+
+  <table>
+    <tr><th>Модель</th><th>Сравнима с</th><th>Размер</th><th>Для чего</th></tr>
+    <tr><td><b>OnyX Mini</b> (встроенная)</td><td>qwen2.5-0.5b</td><td>~0.5 ГБ</td><td>Быстрые диалоги, работает сразу из APK.</td></tr>
+    <tr><td>OnyX Lite</td><td>qwen2.5-1.5b</td><td>~1.1 ГБ</td><td>Быстрый старт, экономия памяти.</td></tr>
+    <tr><td><b>OnyX V0.5</b></td><td>qwen2.5-3b</td><td>~2.0 ГБ</td><td>Баланс качества и скорости (рекомендуется).</td></tr>
+    <tr><td>OnyX Omni-Flash</td><td>qwen2.5-coder:7b</td><td>~4.7 ГБ</td><td>Программирование и сложные задачи.</td></tr>
+    <tr><td>OnyX Omni-Plus</td><td>qwen3:8b</td><td>~5.0 ГБ</td><td>Максимальное качество.</td></tr>
+  </table>
+
+  <h3>Выбор и скачивание (Android)</h3>
+  <ul>
+    <li>При первом запуске или из меню «Модели» выбирается активная модель.</li>
+    <li>Кнопка «Скачать» скачивает модель с Hugging Face (прямые GGUF-файлы); есть прогресс, докачка и отмена.</li>
+    <li>Скачанные модели помечаются «Скачана», активная — «Выбрана · работает на устройстве».</li>
+    <li>Встроенную Mini нельзя удалить — можно только выбрать.</li>
+  </ul>
+
+  <h3>Автопроверка при запуске</h3>
+  <p>При старте чата модель проверяется и «прогревается»: статус в шапке меняется с «подготовка модели…» на «готова · название модели». Это уменьшает задержку первого ответа.</p>
+
+  <div class="warn">Модели 7B–8B требуют 6–8 ГБ свободной оперативной памяти. На слабых устройствах пользуйтесь Mini/Lite.</div>
+</section>
+
+<!-- ================= ЧАТ ================= -->
+<section id="chat">
+  <h2><span class="n">4</span> Чат</h2>
+
+  <h3>Как общаться</h3>
+  <ul>
+    <li>Введите сообщение в поле ввода и нажмите <span class="kbd">➤</span> (или <span class="kbd">Enter</span> на ПК; <span class="kbd">Shift+Enter</span> — новая строка).</li>
+    <li>Пока модель отвечает, кнопка отправки превращается в <span class="kbd">■</span> — нажмите её, чтобы остановить генерацию.</li>
+    <li>Система говорит обычным языком: пишите как человеку — «создай файл», «составь план», «объясни простыми словами».</li>
+  </ul>
+
+  <h3>Элементы экрана</h3>
+  <table>
+    <tr><th>Элемент</th><th>Назначение</th></tr>
+    <tr><td>☰ (слева вверху)</td><td>Меню: новый чат, история, модели, настройки, выход.</td></tr>
+    <tr><td>Точка статуса + текст</td><td>«готова», «подготовка модели…», «OnyX думает…».</td></tr>
+    <tr><td>🌐 / «Поиск»</td><td>Включить веб-поиск — модель использует данные из интернета.</td></tr>
+    <tr><td>«Рассуждение»</td><td>Режим объяснения хода мыслей перед ответом.</td></tr>
+    <tr><td>«⧉ Копировать»</td><td>Под каждым сообщением — копия текста в буфер.</td></tr>
+  </table>
+
+  <h3>История чатов</h3>
+  <ul>
+    <li>Все беседы сохраняются автоматически (на ПК — <code>%LOCALAPPDATA%\OnyXCode\chats.json</code>; на Android — в файлах приложения).</li>
+    <li>«+ Новый чат» создаёт пустую беседу; «История чатов» открывает прошлые.</li>
+    <li>Удаление беседы — через меню или долгое нажатие (требует подтверждения).</li>
+  </ul>
+</section>
+
+<!-- ================= ФАЙЛЫ ================= -->
+<section id="files">
+  <h2><span class="n">5</span> Файлы и агент</h2>
+
+  <p>OnyX умеет создавать, читать, показывать и удалять файлы — для этого не нужны технические команды. Достаточно попросить по-русски:</p>
+  <ul>
+    <li>«Создай файл заметка.txt с текстом …»</li>
+    <li>«Запиши план в файл»</li>
+    <li>«Что в моих файлах?» / «Покажи папку»</li>
+    <li>«Удали файл старое.txt»</li>
+  </ul>
+
+  <h3>Куда сохраняются файлы</h3>
+  <table>
+    <tr><th>Платформа</th><th>Папка</th></tr>
+    <tr><td>Android</td><td><code>Загрузки/OnyX</code> (видно в файловом менеджере; дубликат во внутренней папке приложения)</td></tr>
+    <tr><td>Windows</td><td><code>Документы/OnyX Code/…</code></td></tr>
+  </table>
+
+  <h3>Как это устроено</h3>
+  <p>Модель общается с приложением служебными блоками вида <code>&lt;&lt;&lt;CREATE path="файл"&gt;&gt;&gt; … &lt;&lt;&lt;END&gt;&gt;&gt;</code>. Понимаются также <code>SAVE</code>, <code>WRITE</code>, <code>FILE</code>, <code>APPEND</code>, <code>READ</code>, <code>LIST</code>, <code>DELETE</code>. Вы сами эти блоки не видите — видите только результат и короткую подпись «Файл: …».</p>
+
+  <div class="ok">Создание и изменение файлов выполняется сразу (вы дали согласие, открыв ассистента). Удаление всегда проходит через подтверждение — случайно стереть нельзя.</div>
+
+  <div class="err">Выход за пределы рабочей папки запрещён (безопасность): система не трогает системные каталоги.</div>
+</section>
+
+<!-- ================= СКИЛЛЫ ================= -->
+<section id="skills">
+  <h2><span class="n">6</span> Скиллы: отчёты, презентации, таблицы, планы</h2>
+
+  <p>Готовые инструменты вызываются кнопками на пустом экране: <b>Отчёт</b>, <b>Презентация</b>, <b>Таблица</b>, <b>План</b>. Откроется окно, где вводится тема, затем нажмите «Выполнить».</p>
+
+  <table>
+    <tr><th>Скилл</th><th>Результат</th><th>Формат</th></tr>
+    <tr><td>Собрать отчёт</td><td>Структурированный документ (введение, основная часть, выводы)</td><td><code>.md</code></td></tr>
+    <tr><td>Собрать презентацию</td><td>настоящий PowerPoint с тёмной темой OnyX</td><td><code>.pptx</code></td></tr>
+    <tr><td>Собрать таблицу</td><td>таблица с заголовками и данными</td><td><code>.csv</code> (Excel)</td></tr>
+    <tr><td>Спланировать проект</td><td>пошаговый план действий</td><td><code>.md</code></td></tr>
+  </table>
+
+  <p>В окне скилла показывается подсказка о формате результата и спиннер «Генерация…», пока работает модель. После завершения выводится путь к файлу.</p>
+</section>
+
+<!-- ================= ВЕБ-ПОИСК ================= -->
+<section id="web">
+  <h2><span class="n">7</span> Веб-поиск</h2>
+
+  <p>Когда веб-поиск включён, перед ответом модель получает свежие результаты из интернета (поиск через DuckDuckGo, без API-ключей) и отвечает с их учётом. Это полезно для вопросов о текущих событиях, ценах, датах, новостях.</p>
+
+  <h3>Как включить</h3>
+  <ul>
+    <li>Кнопка 🌐 в шапке чата (становится красной при включении).</li>
+    <li>Или чип «🌐 Поиск» над полем ввода.</li>
+  </ul>
+
+  <div class="warn">Результаты поиска — справочные и могут быть устаревшими. Проверяйте критичные факты.</div>
+  <div class="warn">Для веб-поиска нужен интернет; построенные модели отвечают медленнее.</div>
+</section>
+
+<!-- ================= ЛИМИТЫ ================= -->
+<section id="limits">
+  <h2><span class="n">8</span> Лимиты и активация</h2>
+
+  <p>Без активации доступно <b>10 запросов в день</b> (счётчик сбрасывается каждые сутки). Активация снимает лимит:</p>
+
+  <table>
+    <tr><th>Код</th><th>Срок</th></tr>
+    <tr><td><code>PERM-…</code></td><td>Навсегда</td></tr>
+    <tr><td><code>YEAR-…</code></td><td>На год</td></tr>
+    <tr><td><code>MONTH-…</code></td><td>На месяц</td></tr>
+  </table>
+
+  <p>Код вводится в меню «Активировать» (или «Сменить код»). После активации в боковой панели появляется статус <b>«Активировано навсегда · Без ограничений»</b> с зелёной полосой лимита.</p>
+</section>
+
+<!-- ================= НАСТРОЙКИ ================= -->
+<section id="settings">
+  <h2><span class="n">9</span> Настройки и параметры генерации</h2>
+
+  <p>Раздел «Настройки» (меню ⋯) позволяет:</p>
+  <ul>
+    <li><b>Модель OnyX</b> — выбрать активную из каталога; «Проверить» — проверить доступность и прогреть; «Журнал» — посмотреть/очистить журнал приложения.</li>
+    <li><b>Вход через Google</b> — указать Web Client ID для входа (Android).</li>
+    <li><b>Параметры генерации</b>:
+      <table>
+        <tr><th>Параметр</th><th>По умолчанию</th><th>Описание</th></tr>
+        <tr><td>Температура</td><td>0.3</td><td>Креативность (0 — строго, 2 — фантазия).</td></tr>
+        <tr><td>Top-p</td><td>0.9</td><td>Разнообразие выборки.</td></tr>
+        <tr><td>Top-k</td><td>40</td><td>Сколько вариантов рассматривает модель.</td></tr>
+        <tr><td>Макс. токенов</td><td>700</td><td>Длина ответа (больше — длиннее ответ, но медленнее).</td></tr>
+        <tr><td>Потоки</td><td>авто (2–6)</td><td>Ядра CPU для вычислений.</td></tr>
+        <tr><td>Размер контекста</td><td>4096</td><td>Память под диалог (больше — больше стоит в RAM).</td></tr>
+      </table>
+    </li>
+  </ul>
+
+  <h3>Советы</h3>
+  <ul>
+    <li>Для коротких строгих ответов: температура 0.1–0.3.</li>
+    <li>Для креативных текстов: 0.7–1.0.</li>
+    <li>На слабых устройствах уменьшите «Размер контекста» и «Макс. токенов».</li>
+  </ul>
+</section>
+
+<!-- ================= НЕЙРОСЕТЬ ================= -->
+<section id="nn">
+  <h2><span class="n">10</span> О нейросети OnyX</h2>
+
+  <h3>Что это</h3>
+  <p>OnyX — самостоятельная нейросеть, которая исполняется локально через движок <b>llama.cpp</b>. Модель «живёт» на вашем устройстве: документы и переписка не покидают его.</p>
+
+  <h3>Как работает</h3>
+  <ol>
+    <li>Вы пишете сообщение.</li>
+    <li>Приложение формирует промпт (инструкция ассистента + ваш вопрос, при необходимости + результаты веб-поиска).</li>
+    <li>Движок llama.cpp генерирует ответ токен за токеном на CPU.</li>
+    <li>Ответ показывается в чате; если модель вернула файловые блоки — они выполняются.</li>
+  </ol>
+
+  <h3>Правила хороших промптов</h3>
+  <ul>
+    <li>Будьте конкретны: «Составь план запуска кофейни из 5 шагов» — лучше, чем «помоги с бизнесом».</li>
+    <li>Укажите формат: «в виде списка», «таблицей», «кратко», «подробно».</li>
+    <li>Дайте контекст: цель, аудитория, ограничения.</li>
+    <li>Просите файл явно: «создай файл план.md» — тогда будет создан файл.</li>
+    <li>Разбивайте большие задачи на части.</li>
+  </ul>
+
+  <h3>Возможности</h3>
+  <p style="margin-top:4px">
+    <span class="tag green">Диалог на русском</span>
+    <span class="tag green">Файлы</span>
+    <span class="tag green">Отчёты</span>
+    <span class="tag green">Презентации .pptx</span>
+    <span class="tag green">Таблицы .csv</span>
+    <span class="tag green">Планы</span>
+    <span class="tag green">Веб-поиск</span>
+    <span class="tag green">Офлайн-работа</span>
+    <span class="tag green">Безопасность данных</span>
+  </p>
+
+  <h3>Ограничения</h3>
+  <ul>
+    <li>Модели малого размера (Mini/Lite) могут ошибаться в фактах; проверяйте важную информацию.</li>
+    <li>Локальный запуск на CPU: скорость зависит от устройства; размер контекста ограничен памятью.</li>
+    <li>Генерация презентаций/файлов зависит от того, насколько точно модель следовала формату.</li>
+  </ul>
+</section>
+
+<!-- ================= FAQ ================= -->
+<section id="faq">
+  <h2><span class="n">11</span> FAQ и неполадки</h2>
+
+  <div class="card">
+    <h3>«Локальный движок не отвечает» на Windows</h3>
+    <p>Убедитесь, что запущен Ollama (<code>ollama serve</code> или значок в трее). В настройках нажмите «Проверить». Если модель не установлена — приложение само предложит <code>ollama pull</code>.</p>
+  </div>
+
+  <div class="card">
+    <h3>«Модель не скачана» на Android</h3>
+    <p>Откройте «Модели» и нажмите «Скачать» у нужной модели. Встроенная Mini не требует скачивания — выберите её.</p>
+  </div>
+
+  <div class="card">
+    <h3>Вход через Google не работает</h3>
+    <p>На Android укажите Web Client ID в «Настройки → Вход через Google» (см. раздел 2). Проверьте интернет и что аккаунт Google добавлен в систему. Всегда доступен локальный режим «Продолжить без аккаунта».</p>
+  </div>
+
+  <div class="card">
+    <h3>«Ошибка модели» / «No group 2» (старые версии)</h3>
+    <p>Обновите приложение. В версии 3.2 устранены зависания второго запроса и ошибки парсера; модели отвечают последовательно.</p>
+  </div>
+
+  <div class="card">
+    <h3>Медленные ответы</h3>
+    <p>Выберите меньшую модель (Mini/Lite), уменьшите «Макс. токенов» и «Размер контекста», включите больше «Потоков» (если позволяет CPU).</p>
+  </div>
+
+  <div class="card">
+    <h3>Не хватает памяти</h3>
+    <p>Модели 7–8B требуют 6–8 ГБ RAM. Закройте тяжёлые приложения или используйте Mini/Lite.</p>
+  </div>
+
+  <div class="card">
+    <h3>Где файлы?</h3>
+    <p>Android: <code>Загрузки/OnyX</code>. Windows: <code>Документы/OnyX Code/…</code>. Путь всегда выводится в чате после создания файла.</p>
+  </div>
+</section>
+
+<footer>
+  OnyX Code · документация пользователя · октябрь 2026 г.<br>
+  Локальный ИИ-ассистент: данные не покидают устройство · Открытые модели Qwen · Движок llama.cpp
+</footer>
+
+</main>
+</body>
+</html>
